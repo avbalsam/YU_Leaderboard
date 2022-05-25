@@ -1,5 +1,6 @@
 import os
 import threading
+import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -74,6 +75,7 @@ while True:
     except WebDriverException:
         print("Page crashed")
 
+time.sleep(1)
 
 @app.route("/<name>")
 def main_page(name):
