@@ -74,6 +74,7 @@ while True:
         break
     except WebDriverException:
         print("Page crashed")
+        time.sleep(1)
 
 time.sleep(1)
 
