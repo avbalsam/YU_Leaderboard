@@ -1,1 +1,1 @@
-web: run main.py
+web: python run main.py
