@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from flask import Flask, render_template
-
+from selenium.common.exceptions import WebDriverException
 
 def run_web_app():
     port = int(os.environ.get('PORT', 5000))
@@ -67,7 +67,12 @@ except:
 
 driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
-driver.get('http://www.yutorah.com')
+while True:
+    try:
+        driver.get('http://www.yutorah.com')
+        break
+    except WebDriverException:
+        print("Page crashed")
 
 
 @app.route("/<name>")
