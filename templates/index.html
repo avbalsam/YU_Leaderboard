@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ site_title }}</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+</head>
+<body>
+<div class="container">
+    <ul class="collection-with-header">
+        <li class="collection-header"><h4>{{ list_header }}</h4></li>
+        {% for teacher in teachers_ranked %}
+            <li class ="collection-item"><a href={{teacher['link']}}>{{ teachers_ranked.index(teacher)+1 }}: {{ teacher['name'] }}, Shiur Count: {{ teacher['shiur_count']}} </a></li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
