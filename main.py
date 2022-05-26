@@ -8,16 +8,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from flask import Flask, render_template
 from selenium.common.exceptions import WebDriverException
 
-def run_web_app():
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-
-app = Flask(__name__)
-
-t = threading.Thread(target=run_web_app)
-t.start()
-
 
 def get_rankings(name):
     if name == 'teachers':
@@ -57,7 +47,7 @@ chrome_options = webdriver.ChromeOptions()
 
 try:
     # setup chrome for selenium (needed for heroku builds)
-    s = Service(os.environ.CHROMEDRIVER_PATH)
+    s = Service(os.environ.get("CHROMEDRIVER_PATH"))
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument("--headless")
@@ -77,6 +67,18 @@ while True:
         time.sleep(1)
 
 time.sleep(1)
+
+
+def run_web_app():
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+
+app = Flask(__name__)
+
+t = threading.Thread(target=run_web_app)
+t.start()
+
 
 @app.route("/<name>")
 def main_page(name):
