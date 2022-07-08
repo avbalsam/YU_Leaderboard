@@ -70,24 +70,21 @@ def print_ranked_list(ranked_list):
 
 chrome_options = webdriver.ChromeOptions()
 
-while True:
-    # setup chrome for selenium (needed for heroku builds)
-    s = Service(os.environ.get("CHROMEDRIVER_PATH"))
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--remote-debugging-port=9222")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    try:
-        driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
-    except:
-        print("Unable to install chromedriver from path. Using webdriver-manager...")
-        driver = webdriver.Chrome(ChromeDriverManager().install())
-    time.sleep(5)
-    driver.get('http://www.yutorah.com')
-    time.sleep(5)
-    print("Window maximized...")
-    driver.maximize_window()
-    time.sleep(3)
-
+# setup chrome for selenium (needed for heroku builds)
+s = Service(os.environ.get("CHROMEDRIVER_PATH"))
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--remote-debugging-port=9222")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+try:
+    driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+except:
+    print("Unable to install chromedriver from path. Using webdriver-manager...")
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+time.sleep(1)
+driver.get('http://www.yutorah.com')
+time.sleep(1)
+print("Window maximized...")
+driver.maximize_window()
 time.sleep(1)
