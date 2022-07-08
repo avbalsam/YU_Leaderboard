@@ -76,11 +76,10 @@ while True:
     except:
         print("Unable to install chromedriver from path. Using webdriver-manager...")
         driver = webdriver.Chrome(ChromeDriverManager().install())
-    try:
-        driver.get('http://www.yutorah.com')
-        break
-    except WebDriverException:
-        print("Page crashed")
-        time.sleep(1)
+    time.sleep(5)
+    driver.get('http://www.yutorah.com')
+    time.sleep(5)
+    driver.maximize_window()
+    time.sleep(3)
 
 time.sleep(1)
