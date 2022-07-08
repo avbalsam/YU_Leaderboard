@@ -45,10 +45,10 @@ def get_rankings(name):
 
     # Depending on size of page, find dropdown or side menu
     try:
-        div = driver.find_element_by_id(f"{ranking}DropDown")
+        div = driver.find_element(by=By.ID, value=f"{ranking}DropDown")
     except NoSuchElementException:
-        div = driver.find_element_by_id(f"{ranking}Holder")
-        div = div.find_element_by_id(f"{ranking}DropDown")
+        div = driver.find_element(by=By.ID, value=f"{ranking}Holder")
+        div = div.find_element(by=By.ID, value=f"{ranking}DropDown")
 
     el_list = div.find_elements(by=By.XPATH, value="//a[@class='nav-item']")
 
@@ -58,7 +58,7 @@ def get_rankings(name):
         link = item.get_attribute('href')
         index = name.index("<span>")
         name = name[:index]
-        shiur_count = item.find_element_by_tag_name('span')
+        shiur_count = item.find_element(by=By.TAG_NAME, value='span')
         shiur_count = shiur_count.get_attribute('innerHTML')
         shiur_count = int(shiur_count.replace("(", "").replace(")", "").replace(",", ""))
         unordered_list.append({'name': name.strip(), 'shiur_count': shiur_count, 'link': link})
