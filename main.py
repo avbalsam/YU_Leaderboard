@@ -87,6 +87,7 @@ chrome_options.add_argument("--no-sandbox")
 
 driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
+
 time.sleep(1)
 driver.get('http://www.yutorah.com')
 time.sleep(1)
