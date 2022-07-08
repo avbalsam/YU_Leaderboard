@@ -9,6 +9,23 @@ from flask import Flask, render_template
 from selenium.common.exceptions import WebDriverException
 
 
+def run_web_app():
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+
+app = Flask(__name__)
+
+t = threading.Thread(target=run_web_app)
+t.start()
+
+
+@app.route("/<name>")
+def main_page(name):
+    return render_template('index.html', list_header=f"{name.capitalize()} Ranked", teachers_ranked=get_rankings(name),
+                           site_title="YULeaderboard.com")
+
+
 def get_rankings(name):
     if name == 'teachers':
         div = driver.find_element_by_id("navTeachersDropDown")
@@ -53,7 +70,6 @@ while True:
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
-
     driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
     try:
         driver.get('http://www.yutorah.com')
@@ -63,20 +79,3 @@ while True:
         time.sleep(1)
 
 time.sleep(1)
-
-
-def run_web_app():
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-
-
-app = Flask(__name__)
-
-t = threading.Thread(target=run_web_app)
-t.start()
-
-
-@app.route("/<name>")
-def main_page(name):
-    return render_template('index.html', list_header=f"{name.capitalize()} Ranked", teachers_ranked=get_rankings(name),
-                           site_title="YULeaderboard.com")
