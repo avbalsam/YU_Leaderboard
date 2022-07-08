@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from flask import Flask, render_template
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, NoSuchElementException
 
 
 def run_web_app():
@@ -29,13 +29,20 @@ def main_page(name):
 
 def get_rankings(name):
     if name == 'teachers':
-        div = driver.find_element_by_id("navTeachersDropDown")
+        ranking = "navTeachers"
     elif name == 'series':
-        div = driver.find_element_by_id("navSeriesDropDown")
+        ranking = "navSeries"
     elif name == 'venues':
-        div = driver.find_element_by_id("navVenuesDropDown")
+        ranking = "navVenues"
     else:
         return list()
+
+    # Depending on size of page, find dropdown or side menu
+    try:
+        div = driver.find_element_by_id(f"{ranking}DropDown")
+    except NoSuchElementException:
+        div = driver.find_element_by_id(f"{ranking}Holder")
+
     el_list = div.find_elements_by_xpath(".//a[@class='nav-item']")
 
     unordered_list = list()
