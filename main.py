@@ -79,6 +79,7 @@ while True:
     time.sleep(5)
     driver.get('http://www.yutorah.com')
     time.sleep(5)
+    print("Window maximized...")
     driver.maximize_window()
     time.sleep(3)
 
