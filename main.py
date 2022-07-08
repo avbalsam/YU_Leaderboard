@@ -2,6 +2,7 @@ import os
 import threading
 import time
 
+from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -21,9 +22,13 @@ t = threading.Thread(target=run_web_app)
 t.start()
 
 
+@app.route("/")
+def index():
+    return
+
 @app.route("/<name>")
 def main_page(name):
-    return render_template('index.html', list_header=f"{name.capitalize()} Ranked", teachers_ranked=get_rankings(name),
+    return render_template('rankings.html', list_header=f"{name.capitalize()} Ranked", teachers_ranked=get_rankings(name),
                            site_title="YULeaderboard.com")
 
 
@@ -43,7 +48,7 @@ def get_rankings(name):
     except NoSuchElementException:
         div = driver.find_element_by_id(f"{ranking}Holder")
 
-    el_list = div.find_elements_by_xpath(".//a[@class='nav-item']")
+    el_list = div.find_elements(by=By.XPATH, value="//a[@class='nav-item']")
 
     unordered_list = list()
     for item in el_list:
