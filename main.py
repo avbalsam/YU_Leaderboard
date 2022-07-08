@@ -24,7 +24,8 @@ t.start()
 
 @app.route("/")
 def index():
-    return
+    return "Go to /teachers, /publications, or /series to see rankings!"
+
 
 @app.route("/<name>")
 def main_page(name):
@@ -47,6 +48,7 @@ def get_rankings(name):
         div = driver.find_element_by_id(f"{ranking}DropDown")
     except NoSuchElementException:
         div = driver.find_element_by_id(f"{ranking}Holder")
+        div = div.find_element_by_id(f"{ranking}DropDown")
 
     el_list = div.find_elements(by=By.XPATH, value="//a[@class='nav-item']")
 
