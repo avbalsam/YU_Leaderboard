@@ -84,11 +84,9 @@ chrome_options.add_argument("--remote-debugging-port=9222")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-try:
-    driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
-except:
-    print("Unable to install chromedriver from path. Using webdriver-manager...")
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+
+driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+
 time.sleep(1)
 driver.get('http://www.yutorah.com')
 time.sleep(1)
