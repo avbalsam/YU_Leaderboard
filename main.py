@@ -41,7 +41,7 @@ def get_rankings(name):
     elif name == 'venues':
         ranking = "navVenues"
     else:
-        return list()
+        ranking = "navTeachers"
 
     # Depending on size of page, find dropdown or side menu
     try:
@@ -79,13 +79,20 @@ chrome_options = webdriver.ChromeOptions()
 
 # setup chrome for selenium (needed for heroku builds)
 s = Service(os.environ.get("CHROMEDRIVER_PATH"))
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_argument("--remote-debugging-port=9222")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
 
-driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+# Uncomment these if running on heroku
+# chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+# chrome_options.add_argument("--remote-debugging-port=9222")
+# chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-dev-shm-usage")
+# chrome_options.add_argument("--no-sandbox")
+
+try:
+    driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
+except TypeError:
+    print("Could not find chromedriver. Installing...")
+    s = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=s, chrome_options=chrome_options)
 
 
 time.sleep(1)

@@ -1,3 +1,4 @@
+# Use this file if running on heroku cloud
 build:
   docker:
     web: Dockerfile
